@@ -65,12 +65,21 @@
 
 
 
-
-
-
-
-
-
+    <script>
+            fetch("https://api.themoviedb.org/3/movie/popular?api_key=79f9a21cb7059eebf8ca2f7d44a4032c&language=pt-BR&page=1")
+            .then(response =>{
+                return response.json()
+        
+            })
+            .then(data =>{
+                console.log(data.results)
+            })
+            .catch(err =>{
+                console.log("Erro ao ler a API => "+err)
+            })
+        
+            </script>
+        
 
 
 
