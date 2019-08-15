@@ -9,6 +9,45 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <style>
+        #linha{
+        border: 1px solid silver;
+        padding: 10px;
+        display: inline-block;
+        width: 95%;
+        margin: 10px;
+        box-shadow: 5px 5px 5px #666;
+        transition: ease .5s;
+       }
+       
+       #linha:active{
+        margin-left: 15px;
+        background-color: rgba(200, 200, 200, 0.9)
+       }
+       
+       #linha #capa img{
+        width: 100%;
+       
+       }
+       #linha #capa{
+        width: 20%;
+        float: left;
+       }
+       #linha #dados h3{
+        font-size: 15pt;
+        padding-left: 10px;
+       }
+       #linha #dados h5{
+        font-size: 12pt;
+        padding-left: 10px;
+       }
+       
+       #linha #dados{
+        width: 80%;
+        float: right;
+       }
+    </style>
+
 
 </head>
 <body>
@@ -62,31 +101,42 @@
     <!--Fim da barra de navegação-->
 
 
+    <main>
+        <div id="conteudo"></div>
+    </main>
 
 
 
     <script>
+
+        var rs="";
             fetch("https://api.themoviedb.org/3/movie/popular?api_key=79f9a21cb7059eebf8ca2f7d44a4032c&language=pt-BR&page=1")
             .then(response =>{
                 return response.json()
         
             })
             .then(data =>{
+
+                data.results.forEach(element => {
+                    
+
+                rs+="<div id=\"linha\">";
+                rs+="<div id=\"capa\">  <a href=detalhes.html?id="+element.id+"><img src=https://image.tmdb.org/t/p/w500"+element.poster_path+"> </a> </div>";
+                rs+="<div id=\"dados\"><h3>"+element.title+"</h3><br><h5>Popularidade: "+element.popularity+"</h5></div>";
+                rs+="</div>";
+                document.getElementById("conteudo").innerHTML=rs;
+            }
+            );
                 console.log(data.results)
             })
             .catch(err =>{
                 console.log("Erro ao ler a API => "+err)
             })
+
+
+    </script>
+
         
-            </script>
-        
-
-
-
-
-
-
-
 
 
 

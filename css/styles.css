@@ -1,4 +1,4 @@
-*{
+﻿*{
     margin:50px;
     padding:0px;
     font-family: arial;
@@ -18,7 +18,7 @@ Aumentar a escala da imagem de fundo em até 30%
 
 */
 body:hover{
-    background-size: 130%;
+    background-size: 5%;
     cursor: pointer;
 
 }

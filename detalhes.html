@@ -9,7 +9,46 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <style>
+        *{
+            margin:0px;
+            padding:0px;
+            box-sizing: border-box;
+        }
 
+        #caixa img{
+            width: 100%;
+        }
+
+        #dados h3{
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #dados h5{
+            color:darkred;
+            text-align: center;
+        }
+
+        #sinopse{
+            padding: 20px;
+            text-align: justify;
+        }
+
+        #conteudo{
+            width: 100%;
+        }
+
+        #genero{
+            padding-left: 20px;
+            font-weight: bold;
+        }
+
+        #site{
+            text-align: center;
+        }
+    
+    </style>
 </head>
 <body>
     
@@ -18,7 +57,7 @@
             <a class="navbar-brand" href="#">
                 
                 <img src="imagens/favicon.png" style="width: 30px;">
-                Suspense
+                Popular
 
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,29 +104,37 @@
     <main>
         <div id="conteudo"></div>
     </main>
-    
-    
-    
+
+
+
     <script>
 
+        var id_filme = window.location.search;
+        id_filme = id_filme.substring(4,id_filme.length);
+
         var rs="";
-            fetch("https://api.themoviedb.org/3/movie/now_playing?api_key=79f9a21cb7059eebf8ca2f7d44a4032c&language=pt-BR&page=1")
+            fetch("https://api.themoviedb.org/3/movie/"+id_filme+"?api_key=79f9a21cb7059eebf8ca2f7d44a4032c&language=pt-BR")
             .then(response =>{
                 return response.json()
         
             })
-            .then(data =>{
-
-                data.results.forEach(element => {
-                    
+            .then(data =>{            
 
                 rs+="<div id=\"linha\">";
-                rs+="<div id=\"capa\">  <a href=detalhes.html?id="+element.id+"><img src=https://image.tmdb.org/t/p/w500"+element.poster_path+"> </a> </div>";
-                rs+="<div id=\"dados\"><h3>"+element.title+"</h3><br><h5>Popularidade: "+element.popularity+"</h5></div>";
+                rs+="<div id=\"capa\"><img src=https://image.tmdb.org/t/p/w500"+data.poster_path+" style=\"width:100%\"></div>";
+                rs+="<div id=\"dados\"><h3>"+data.title+"</h3><br><h5>Popularidade: "+data.popularity+"</h5>";
+                rs+="<p id=\"sinopse\">"+data.overview+"</p>";
+                rs+="<p id=\"genero\">Genero: "+data.genres[0]['name']+"</p>";
+                rs+="<p id=\"site\">Site Oficial: <a href="+data.homepage+">"+data.homepage+"</a></p>";
+                rs+="<p id=\"orcamento\">Orçamento do filme: "+data.budget+"</p>";
+                rs+="<p id=\"lancamento\">Lançamento: "+data.release_date+"</p>";
+                rs+="<p id=\"imdb\">Imdb "+data.imdb_id+"</p>";
+                rs+="<p id=\"produtora\">Produtoras: "+data.production_companies[0]['name']+"</p>";
+                
+                rs+="</div>";
                 rs+="</div>";
                 document.getElementById("conteudo").innerHTML=rs;
-            }
-            );
+
                 console.log(data.results)
             })
             .catch(err =>{
@@ -98,7 +145,6 @@
     </script>
 
         
-
 
 
     <!-- Optional JavaScript -->
